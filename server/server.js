@@ -3,6 +3,14 @@ const express = require("express");
 
 const app = express()
 
+// Route to get restaurants
+app.get("/get-restaurants", (req, res) => {
+  res.status(418).json({
+    status: "success",
+    restaurant: "McDonalds"
+  });
+})
+
 // port defaults to 3001 if PORT not provided by '.env'
 const port = process.env.PORT || 3001;
 
