@@ -4,22 +4,15 @@ morgan = require('morgan');
 
 const app = express();
 
+// Middleware
+app.use(express.json());
+
 // morgan third-party middleware
 // app.use(morgan("tiny"));
-app.use(morgan("dev"));
-
-// Custom Middleware
-app.use((req, res, next) => {
-  console.log("Custom middleware executed!");
-
-  // next function required to tell the middleware what to do after running
-  next();
-});
-
+// app.use(morgan("dev"));
 
 // Route to GET ALL restaurants
 app.get("/api/v1/restaurants", (req, res) => {
-  console.log("Get all restaurants endpoint");
   res.status(200).json({
     status: "success",
     data: {
@@ -34,13 +27,45 @@ app.get("/api/v1/restaurants/:id", (req, res) => {
   res.status(200).json({
     status: "success",
     data: {
-      response: req.params
+      restaurant: "Pizza Hut"
     }    
   });
 });
 
-// Route to GET a restaurant by ID
-app.post("/api/v1/restaurants/", (req, res) => {});
+// Route to CREATE a restaurant
+app.post("/api/v1/restaurants/", (req, res) => {
+  console.log(req.body);
+  res.status(201).json({
+    status: "success",
+    data: {
+      id: 543,
+      name: req.body.name,
+      location: req.body.location,
+      price_range: req.body.price_range
+    }    
+  });
+});
+
+// Route to UPDATE a restaurant
+app.put("/api/v1/restaurants/:id", (req, res) => {
+  console.log(req.params.id);
+  res.status(200).json({
+    status: "success",
+    data: {
+      id: req.params.id,
+      name: req.body.name,
+      location: req.body.location,
+      price_range: req.body.price_range
+    }    
+  });
+});
+
+// Route to DELETE a restaurant by ID
+app.delete("/api/v1/restaurants/:id", (req, res) => {
+  res.status(204).json({
+    status: "success",
+  })
+});
 
 // port defaults to 3001 if PORT not provided by '.env'
 const port = process.env.PORT || 3001;
