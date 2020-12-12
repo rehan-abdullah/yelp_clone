@@ -1,5 +1,18 @@
+.btn-add {
+  width: 100%;
+  min-width: 55px;
+}
 @media screen and (max-width: 575px) {
   .btn-add {
     width: 100%;
   }
+}
+
+.custom-select {
+  -webkit-appearance: menulist;
+}
+.restaurant-form-container,
+.restaurant-list-container {
+  /* max-width: 1280px; */
+  margin: 0 auto;
 }
