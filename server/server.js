@@ -60,17 +60,26 @@ app.get("/api/v1/restaurants/:id", async (req, res) => {
 });
 
 // Route to CREATE a restaurant
-app.post("/api/v1/restaurants/", (req, res) => {
-  console.log(req.body);
-  res.status(201).json({
-    status: "success",
-    data: {
-      id: 543,
-      name: req.body.name,
-      location: req.body.location,
-      price_range: req.body.price_range
-    }    
-  });
+app.post("/api/v1/restaurants/", async (req, res) => {
+
+  try{
+    const results = await db.query("INSERT INTO restaurants (name, location, price_range) VALUES ($1, $2, $3) RETURNING *", [
+      req.body.name,
+      req.body.location,
+      req.body.price_range
+    ]);
+
+    console.log(results.rows[0]);
+
+    res.status(201).json({
+      status: "success",
+      data: {
+        restaurant: results.rows[0]
+      }    
+    });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 // Route to UPDATE a restaurant
