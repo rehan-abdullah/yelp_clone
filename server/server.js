@@ -83,24 +83,47 @@ app.post("/api/v1/restaurants/", async (req, res) => {
 });
 
 // Route to UPDATE a restaurant
-app.put("/api/v1/restaurants/:id", (req, res) => {
-  console.log(req.params.id);
-  res.status(200).json({
-    status: "success",
-    data: {
-      id: req.params.id,
-      name: req.body.name,
-      location: req.body.location,
-      price_range: req.body.price_range
-    }    
-  });
+app.put("/api/v1/restaurants/:id", async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    // Parameterized query to prevent SQL injection attacks
+    const results = await db.query("UPDATE restaurants SET name = $1, location = $2, price_range = $3 where id = $4 RETURNING *", [
+      req.body.name,
+      req.body.location,
+      req.body.price_range,
+      id
+    ]);
+
+    console.log(results.rows[0]);
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        restaurant: results.rows[0]  // Pulls single restaurant data out of response array
+      }    
+    });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 // Route to DELETE a restaurant by ID
-app.delete("/api/v1/restaurants/:id", (req, res) => {
-  res.status(204).json({
-    status: "success",
-  })
+app.delete("/api/v1/restaurants/:id", async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    // Parameterized query to prevent SQL injection attacks
+    const results = await db.query("DELETE FROM restaurants WHERE id = $1 RETURNING *", [id]);
+
+    console.log(results.rows);
+
+    res.status(204).json({
+      status: "No Content!",
+    })
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 // port defaults to 3001 if PORT not provided by '.env'
