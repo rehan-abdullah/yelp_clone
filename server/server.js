@@ -33,14 +33,30 @@ app.get("/api/v1/restaurants", async (req, res) => {
 });
 
 // Route to GET a restaurant by ID
-app.get("/api/v1/restaurants/:id", (req, res) => {
-  console.log(req.params);
-  res.status(200).json({
-    status: "success",
-    data: {
-      restaurant: "Pizza Hut"
-    }    
-  });
+app.get("/api/v1/restaurants/:id", async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    // Parameterized query to prevent SQL injection attacks
+    const results = await db.query("SELECT * FROM restaurants where id = $1", [id]);
+
+    console.log(results.rows[0]);
+    if (results.rows.length === 0) {
+      res.status(404).json({
+        status: "Not Found!",
+        message: "No restaurants found matching the given id."
+      });
+    } else {
+      res.status(200).json({
+        status: "success",
+        data: {
+          restaurant: results.rows[0]  // Pulls single restaurant data out of response array
+        }    
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 // Route to CREATE a restaurant
