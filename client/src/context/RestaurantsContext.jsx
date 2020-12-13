@@ -6,7 +6,7 @@ export const RestaurantsContextProvider = props => {
   const [restaurants, setRestaurants] = useState([]);
 
   return(
-    <RestaurantsContext.Provider values={{
+    <RestaurantsContext.Provider value={{
       restaurants,
       setRestaurants
     }}>

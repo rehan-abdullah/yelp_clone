@@ -12,8 +12,8 @@ const AddRestaurant = () => {
             <input type="text" className="form-control" placeholder="Location..." />
           </div>
           <div className="col-12 my-1 px-sm-1 col-sm-3">
-            <select className="form-control custom-select mr-sm-2">
-              <option disabled selected>Price Range</option>
+            <select className="form-control custom-select mr-sm-2" defaultValue="Price Range">
+              <option disabled>Price Range</option>
               <option value="1">£</option>
               <option value="2">££</option>
               <option value="3">£££</option>

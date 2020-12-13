@@ -1,11 +1,13 @@
 require('dotenv').config();
 const express = require("express");
+const cors = require("cors");
 const db = require('./db')
 // morgan = require('morgan');
 
 const app = express();
 
 // Middleware
+app.use(cors());
 app.use(express.json());
 
 // morgan third-party middleware
@@ -17,8 +19,6 @@ app.get("/api/v1/restaurants", async (req, res) => {
   // Try-catch block for async functions/promises
   try {
     const results = await db.query('SELECT * FROM restaurants');
-
-    console.log(results.rows);
 
     res.status(200).json({
       status: "success",
