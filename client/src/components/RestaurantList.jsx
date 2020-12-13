@@ -34,22 +34,19 @@ const RestaurantList = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>McDonalds</td>
-            <td>Harrow</td>
-            <td>££</td>
-            <td>4</td>
-            <td><button className="btn btn-warning">Update</button></td>
-            <td><button className="btn btn-danger">Delete</button></td>
-          </tr>
-          <tr>
-            <td>McDonalds</td>
-            <td>Harrow</td>
-            <td>££</td>
-            <td>4</td>
-            <td><button className="btn btn-warning">Update</button></td>
-            <td><button className="btn btn-danger">Delete</button></td>
-          </tr>
+          {restaurants && restaurants.map((restaurant) => {
+            const {id, name, location, price_range} = restaurant;
+            return (
+              <tr key={id}>
+                <td>{name}</td>
+                <td>{location}</td>
+                <td>{"£".repeat(price_range)}</td>
+                <td>{Math.floor((Math.random() * 5) + 1)}</td>
+                <td><button className="btn btn-warning">Update</button></td>
+                <td><button className="btn btn-danger">Delete</button></td>
+              </tr>
+            )
+          })}
         </tbody>
       </table>
     </div>
