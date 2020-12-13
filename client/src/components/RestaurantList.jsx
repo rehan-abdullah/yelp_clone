@@ -23,6 +23,14 @@ const RestaurantList = () => {
             <td><button className="btn btn-warning">Update</button></td>
             <td><button className="btn btn-danger">Delete</button></td>
           </tr>
+          <tr>
+            <td>McDonalds</td>
+            <td>Harrow</td>
+            <td>££</td>
+            <td>4</td>
+            <td><button className="btn btn-warning">Update</button></td>
+            <td><button className="btn btn-danger">Delete</button></td>
+          </tr>
         </tbody>
       </table>
     </div>
