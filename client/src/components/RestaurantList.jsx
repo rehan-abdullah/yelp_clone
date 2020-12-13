@@ -16,7 +16,16 @@ const RestaurantList = () => {
       }
     };
     fetchAllRestaurants();
-  }, [setRestaurants])
+  }, [setRestaurants]);
+
+  const handleDelete = async (id) => {
+    try {
+      await RestaurantFinder.delete(`/${id}`);
+      setRestaurants(restaurants.filter(restaurant => restaurant.id !== id));
+    } catch (err) {
+      console.log(err)
+    }
+  };
 
   console.log(restaurants);
 
@@ -43,7 +52,7 @@ const RestaurantList = () => {
                 <td>{"£".repeat(price_range)}</td>
                 <td>{Math.floor((Math.random() * 5) + 1)}</td>
                 <td><button className="btn btn-warning">Update</button></td>
-                <td><button className="btn btn-danger">Delete</button></td>
+                <td><button onClick={() => handleDelete(id)} className="btn btn-danger">Delete</button></td>
               </tr>
             )
           })}
